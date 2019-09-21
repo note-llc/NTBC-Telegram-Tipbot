@@ -1,5 +1,3 @@
-#-*- coding: utf-8 -*-
-
 import json
 import codecs
 import requests
@@ -29,7 +27,7 @@ def deposit(bot, update):
 	if user is None:
 		bot.send_message(chat_id=update.message.chat_id, text="Please set a telegram username in your profile settings!")
 	else:
-		address = "/usr/bin/idealcashd"
+		address = "root/telegrambot/Metropolitan/src/METROd"
 		result = subprocess.run([address,"getaccountaddress",user],stdout=subprocess.PIPE)
 		clean = (result.stdout.strip()).decode("utf-8")
 		bot.send_message(chat_id=update.message.chat_id, text="@{0} your depositing address is: {1}".format(user,clean))
