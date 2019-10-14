@@ -17,10 +17,10 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 def commands(bot, update):
 	user = update.message.from_user.username
-	bot.send_message(chat_id=update.message.chat_id, text="Initiating commands /tip & /withdraw have a specfic format,\n use them like so:" + "\n \n Parameters: \n <user> = target user to tip \n <amount> = amount of idealCash to utilise \n <address> = idealCash address to withdraw to \n \n Tipping format: \n /tip <user> <amount> \n \n Withdrawing format: \n /withdraw <address> <amount>")
+	bot.send_message(chat_id=update.message.chat_id, text="Initiating commands /tip & /withdraw have a specfic format,\n use them like so:" + "\n \n Parameters: \n <user> = target user to tip \n <amount> = amount of NoteBlockChain to utilise \n <address> = NoteBlockChain address to withdraw to \n \n Tipping format: \n /tip <user> <amount> \n \n Withdrawing format: \n /withdraw <address> <amount>")
 
 def help(bot, update):
-	bot.send_message(chat_id=update.message.chat_id, text="The following commands are at your disposal: /hi , /commands , /deposit , /tip , /withdraw , or /balance")
+	bot.send_message(chat_id=update.message.chat_id, text="The following commands are at your disposal: /hi , /commands , /deposit , /tip , /withdraw or /balance")
 
 def deposit(bot, update):
 	user = update.message.from_user.username
@@ -40,13 +40,13 @@ def tip(bot,update):
 	if user is None:
 		bot.send_message(chat_id=update.message.chat_id, text="Please set a telegram username in your profile settings!")
 	else:
-		machine = "@IdealCash_Tipbot"
+		machine = "@NoTeM"
 		if target == machine:
 			bot.send_message(chat_id=update.message.chat_id, text="HODL.")
 		elif "@" in target:
 			target = target[1:]
 			user = update.message.from_user.username
-			core = "/usr/bin/idealcashd"
+			core = "/usr/local/bin/notebcd"
 			result = subprocess.run([core,"getbalance",user],stdout=subprocess.PIPE)
 			balance = float((result.stdout.strip()).decode("utf-8"))
 			amount = float(amount)
@@ -67,7 +67,7 @@ def balance(bot,update):
 	if user is None:
 		bot.send_message(chat_id=update.message.chat_id, text="Please set a telegram username in your profile settings!")
 	else:
-		core = "/usr/bin/idealcashd"
+		core = "/usr/local/bin/notebcd"
 		result = subprocess.run([core,"getbalance",user],stdout=subprocess.PIPE)
 		clean = (result.stdout.strip()).decode("utf-8")
 		balance  = float(clean)
@@ -86,7 +86,7 @@ def withdraw(bot,update):
 		address = ''.join(str(e) for e in address)
 		target = target.replace(target[:35], '')
 		amount = float(target)
-		core = "/usr/bin/idealcashd"
+		core = "/usr/local/bin/notebcd"
 		result = subprocess.run([core,"getbalance",user],stdout=subprocess.PIPE)
 		clean = (result.stdout.strip()).decode("utf-8")
 		balance = float(clean)
